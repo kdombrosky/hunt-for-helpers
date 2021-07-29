@@ -1,7 +1,6 @@
 {
   "name": "team-project-2",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,5 +17,16 @@
     "express-session": "^1.17.2",
     "mysql2": "^2.2.5",
     "sequelize": "^6.6.5"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kdombrosky/hunt-for-helpers.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/kdombrosky/hunt-for-helpers/issues"
+  },
+  "homepage": "https://github.com/kdombrosky/hunt-for-helpers#readme",
+  "description": ""
 }
