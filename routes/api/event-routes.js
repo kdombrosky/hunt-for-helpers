@@ -1,16 +1,20 @@
 const router = require('express').Router();
-const { Event } = require('../../models');
+const { Event, User, Attendance } = require('../../models');
 
 // Read all events
 router.get('/', (req,res) => {
     Event.findAll({
-        attributes: ['id', 'title', 'location', 'date', 'description', 'attendance'],
+        attributes: ['id', 'title', 'location', 'date', 'description'],
         // sort newest to oldest
         order: [['created_at', 'DESC']],
         include: [
             {
                 model: User,
-                attributes: []
+                attributes: ['name']
+            },
+            {
+                model: Attendance,
+                attributes: ['going']
             }
         ]
     })
@@ -27,11 +31,15 @@ router.get('/:id', (req,res) => {
         where: {
             id: req.params.id
         },
-        attributes: ['id', 'title', 'location', 'date', 'description', 'attendance'],
+        attributes: ['id', 'title', 'location', 'date', 'description'],
         include: [
             {
                 model: User,
-                attributes: []
+                attributes: ['name']
+            },
+            {
+                model: Attendance,
+                attributes: ['going']
             }
         ]
     })
@@ -54,6 +62,29 @@ router.post('/', (req,res) => {
     .catch(err => {
         console.log(err);
         res.status(500).json(err);
+    });
+});
+
+// Update event attendance
+router.put('', (req, res) => {
+    // Create the attendance update 
+    Attendance.create({
+        going: req.body.res
+    })
+    .then(() => {
+        // find the event the user is attending/or not? 
+        return Event.findOne({
+            where: {
+                id: req.body.event_id
+            },
+            attributes: [
+                'id',
+                'title',
+                'date',
+                'location',
+                // use raw MySQL aggregate function query to get a count of how many votes the post has and return it under the name `vote_count`
+            ]
+        })
     });
 });
 
