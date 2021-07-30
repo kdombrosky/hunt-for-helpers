@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Event, User, Attendance } = require('../../models');
+const { Event, User, UserEvent } = require('../../models');
 
 // Read all events
 router.get('/', (req,res) => {
@@ -13,7 +13,7 @@ router.get('/', (req,res) => {
                 attributes: ['name']
             },
             {
-                model: Attendance,
+                model: UserEvent,
                 attributes: ['going']
             }
         ]
@@ -38,7 +38,7 @@ router.get('/:id', (req,res) => {
                 attributes: ['name']
             },
             {
-                model: Attendance,
+                model: UserEvent,
                 attributes: ['going']
             }
         ]
@@ -68,7 +68,7 @@ router.post('/', (req,res) => {
 // Update event attendance
 router.put('', (req, res) => {
     // Create the attendance update 
-    Attendance.create({
+    UserEvent.create({
         going: req.body.res
     })
     .then(() => {

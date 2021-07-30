@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Event, User, Attendance } = require('../../models');
+const { Event, User, UserEvent } = require('../../models');
 
 // Get votes for certain event 
 
