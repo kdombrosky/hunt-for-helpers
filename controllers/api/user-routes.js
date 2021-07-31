@@ -6,11 +6,11 @@ router.get('/', (req, res) => {
     User.findAll({
         attributes: { exclude: ['password'] }
     })
-        .then(dbUserData => res.json(dbUserData))
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
+    .then(dbUserData => res.json(dbUserData))
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
 });
 
 // GET a specific user /api/users/1
@@ -50,12 +50,13 @@ router.post('/', (req, res) => {
 
 // Login route
 router.post('/login', (req, res) => {
-    // expects {email: 'lernantino@gmail.com', password: 'password1234'}
+    // expects {username: 'JohnSmith', password: 'password1234'}
     User.findOne({
         where: {
             username: req.body.username
         }
-    }).then(dbUserData => {
+    })
+    .then(dbUserData => {
         if (!dbUserData) {
             res.status(400).json({ message: 'No user with that username!' });
             return;
@@ -77,20 +78,20 @@ router.post('/login', (req, res) => {
 router.delete('/:id', (req, res) => {
     User.destroy({
         where: {
-        id: req.params.id
+            id: req.params.id
         }
     })
-        .then(dbUserData => {
+    .then(dbUserData => {
         if (!dbUserData) {
             res.status(404).json({ message: 'No user found with this id' });
             return;
         }
         res.json(dbUserData);
-        })
-        .catch(err => {
+    })
+    .catch(err => {
         console.log(err);
         res.status(500).json(err);
-        });
+    });
 });
 
 
