@@ -1,57 +1,27 @@
-// const User = require('./User');
+const User = require('./User');
 const Event = require('./Event');
-// const Attendance = require('./Attendance');
+const UserEvent = require('./UserEvent');
 
+// allow the user to have event
+User.hasMany(Event, {
+    foreignKey: 'user_id'
+  });
 
-// User.hasMany(Post, {
-//     foreignKey: 'user_id'
-//   });
+Event.belongsTo(User, {
+    foreignKey: 'user_id'
+});
 
-// Post.belongsTo(User, {
-//   foreignKey: 'user_id'
-// });
-// User.belongsToMany(Post, {
-//   through: Vote,
-//   as: 'voted_posts',
-//   foreignKey: 'user_id'
-// });
+// allow user to have many events
+User.belongsToMany(Event, {
+  through: UserEvent,
+  foreignKey: 'user_id'
+});
 
-// Post.belongsToMany(User, {
-//   through: Vote,
-//   as: 'voted_posts',
-//   foreignKey: 'post_id'
-// });
-// Vote.belongsTo(User, {
-//   foreignKey: 'user_id'
-// });
+Event.belongsToMany(User, {
+  through: UserEvent,
+  foreignKey: 'event_id'
+});
 
-// Vote.belongsTo(Post, {
-//   foreignKey: 'post_id'
-// });
-
-// User.hasMany(Vote, {
-//   foreignKey: 'user_id'
-// });
-
-// Post.hasMany(Vote, {
-//   foreignKey: 'post_id'
-// });
-
-// Comment.belongsTo(User, {
-//   foreignKey: 'user_id'
-// });
-
-// Comment.belongsTo(Post, {
-//   foreignKey: 'post_id'
-// });
-
-// User.hasMany(Comment, {
-//   foreignKey: 'user_id'
-// });
-
-// Post.hasMany(Comment, {
-//   foreignKey: 'post_id'
-// });
   
 
-module.exports = { Event };
+module.exports = { Event, User, UserEvent };

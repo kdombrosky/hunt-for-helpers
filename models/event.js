@@ -2,13 +2,23 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 class Event extends Model {}
-
+// add title and description
 Event.init(
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
+      },
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false
+
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false
+
       },
       location: {
           type: DataTypes.STRING,
@@ -19,21 +29,20 @@ Event.init(
             }
             
         }, 
-        date: {
-            type: DataTypes.DATEONLY,
-            allowNull: false,
-            validate: {
-                isDate: true
-            }
-        },
-        attendance: {
-          type: DataTypes.INTEGER,
-          allowNull: true,
-        //   references: {
-        //     model: 'attendance',
-        //     key: 'id'
-        //   }
-        },
+      date: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          validate: {
+              isDate: true
+          }
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'user',
+          key: 'id'
+        }
+      }
     },
     {
       sequelize,
