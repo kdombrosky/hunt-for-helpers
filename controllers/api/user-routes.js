@@ -19,7 +19,27 @@ router.get('/:id', (req, res) => {
         attributes: { exclude: ['password'] },
         where: {
             id: req.params.id
-        }
+        },
+        include: [
+            // {
+            //     model: Post,
+            //     attributes: ['id', 'title', 'post_url', 'created_at']
+            // },
+            // {
+            //     model: Comment,
+            //     attributes: ['id', 'comment_text', 'created_at'],
+            //     include: {
+            //         model: Post,
+            //         attributes: ['title']
+            //     }
+            // },
+            // {
+            //     model: Post,
+            //     attributes: ['title'],
+            //     through: Vote,
+            //     as: 'voted_posts'
+            // }
+        ]
     })
     .then(dbUserData => {
         if(!dbUserData) {
@@ -41,12 +61,21 @@ router.post('/', (req, res) => {
         username: req.body.username,
         password: req.body.password
     })
-    .then(dbUserData => res.json(dbUserData))
+    .then(dbUserData => { // to access session information in the route
+        req.session.save(() => {  // wrap variables in callback to ensure session is created before sending response
+            req.session.user_id = dbUserData.id;
+            req.session.username = dbUserData.username;
+            req.session.loggedIn = true;
+        
+            res.json(dbUserData);
+        });
+    })
     .catch(err => {
         console.log(err);
         res.status(500).json(err);
     });
 });
+
 
 // Login route
 router.post('/login', (req, res) => {
@@ -70,9 +99,38 @@ router.post('/login', (req, res) => {
             return;
         }
         
-        res.json({ user: dbUserData, message: 'You are now logged in!' });
+        req.session.save(() => {
+            // declare session variables
+            req.session.user_id = dbUserData.id;
+            req.session.username = dbUserData.username;
+            req.session.loggedIn = true;
+    
+            res.json({ user: dbUserData, message: 'You are now logged in!' });
+        });
     });  
 });
+
+router.put('/:id', (req, res) => {
+    // pass in req.body instead to only update what's passed through
+    User.update(req.body, {
+        individualHooks: true,
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(dbUserData => {
+        if (!dbUserData[0]) {
+            res.status(404).json({ message: 'No user found with this id' });
+            return;
+        }
+        res.json(dbUserData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+});
+
 
 // DELETE a user /api/users/1
 router.delete('/:id', (req, res) => {

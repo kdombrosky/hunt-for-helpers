@@ -14,7 +14,7 @@ router.get('/', (req,res) => {
             },
             {
                 model: UserEvent,
-                attributes: ['going']
+                attributes: ['user_id']
             }
         ]
     })
@@ -39,11 +39,17 @@ router.get('/:id', (req,res) => {
             },
             {
                 model: UserEvent,
-                attributes: ['going']
+                attributes: ['user_id']
             }
         ]
     })
-    .then(dbEventData => res.json(dbEventData))
+    .then(dbEventData => {
+        if (!dbEventData) {
+            res.status(404).json({ message: 'No event found with this id' });
+            return;
+        }
+        res.json(dbEventData);
+    })
     .catch(err => {
         console.log(err);
         res.status(500).json(err);
