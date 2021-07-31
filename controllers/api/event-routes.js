@@ -10,12 +10,12 @@ router.get('/', (req,res) => {
         include: [
             {
                 model: User,
-                attributes: ['name']
+                attributes: ['username']
             },
-            {
-                model: UserEvent,
-                attributes: ['going']
-            }
+            // {
+            //     model: UserEvent,
+            //     attributes: ['going']
+            // }
         ]
     })
     .then(dbEventData => res.json(dbEventData))
