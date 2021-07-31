@@ -12,10 +12,10 @@ router.get('/', (req,res) => {
                 model: User,
                 attributes: ['username']
             },
-            // {
-            //     model: UserEvent,
-            //     attributes: ['going']
-            // }
+            {
+                model: UserEvent,
+                attributes: ['user_id']
+            }
         ]
     })
     .then(dbEventData => res.json(dbEventData))
@@ -39,11 +39,17 @@ router.get('/:id', (req,res) => {
             },
             {
                 model: UserEvent,
-                attributes: ['going']
+                attributes: ['user_id']
             }
         ]
     })
-    .then(dbEventData => res.json(dbEventData))
+    .then(dbEventData => {
+        if (!dbEventData) {
+            res.status(404).json({ message: 'No event found with this id' });
+            return;
+        }
+        res.json(dbEventData);
+    })
     .catch(err => {
         console.log(err);
         res.status(500).json(err);
@@ -65,14 +71,15 @@ router.post('/', (req,res) => {
     });
 });
 
-// Update event attendance
-router.put('', (req, res) => {
+// Update event attendance /api/rsvp/?
+router.put('/rsvp', (req, res) => {
     // Create the attendance update 
     UserEvent.create({
-        going: req.body.res
+        user_id: req.body.user_id,
+        event_id: req.body.event_id
     })
     .then(() => {
-        // find the event the user is attending/or not? 
+        // find the event the user is attending
         return Event.findOne({
             where: {
                 id: req.body.event_id
@@ -82,9 +89,18 @@ router.put('', (req, res) => {
                 'title',
                 'date',
                 'location',
-                // use raw MySQL aggregate function query to get a count of how many votes the post has and return it under the name `vote_count`
+                // use raw MySQL aggregate function query to get a count of how many userEvents the event has and return it under the name `userEvent_count`
+                [
+                    sequelize.literal('(SELECT COUNT(*) FROM vote WHERE event.id = userEvent.event_id)'),
+                    'userEvent_count'
+                ]
             ]
         })
+        .then(dbEventData => res.json(dbEventData))
+        .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+        });
     });
 });
 
