@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const { Event, User, UserEvent } = require('../../models');
+const sequelize = require('../../config/connection');
+
 
 // Read all events
 router.get('/', (req,res) => {
@@ -12,10 +14,10 @@ router.get('/', (req,res) => {
                 model: User,
                 attributes: ['username']
             },
-            {
-                model: UserEvent,
-                attributes: ['user_id']
-            }
+            // {
+            //     model: UserEvent,
+            //     attributes: ['user_id']
+            // }
         ]
     })
     .then(dbEventData => res.json(dbEventData))
@@ -35,12 +37,12 @@ router.get('/:id', (req,res) => {
         include: [
             {
                 model: User,
-                attributes: ['name']
+                attributes: ['username']
             },
-            {
-                model: UserEvent,
-                attributes: ['user_id']
-            }
+            // {
+            //     model: UserEvent,
+            //     attributes: ['user_id']
+            // }
         ]
     })
     .then(dbEventData => {
@@ -71,6 +73,7 @@ router.post('/', (req,res) => {
     });
 });
 
+// NEEDS TO BE FIXED.......
 // Update event attendance /api/rsvp/?
 router.put('/rsvp', (req, res) => {
     // Create the attendance update 

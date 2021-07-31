@@ -24,8 +24,7 @@ Event.init(
           type: DataTypes.STRING,
           allowNull: false,
           validate: {
-              len: [2, 25],
-              isAlpha: true, 
+              len: [2, 25]
             }
             
         }, 
