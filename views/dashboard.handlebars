@@ -1,0 +1,41 @@
+<section>
+  <h2> Dashboard</h2>
+
+  <form class="create-new-event">
+    <div>
+      <label for="event-title">Title</label>
+      <input type="text" id="event-title" name="event-title" />
+    </div>
+    <div>
+      <label for="event-description">Description</label>
+      <input id="event-description" name="event-description" />
+    </div>
+    <div>
+      <label for="event-date">Event Date</label>
+      <input id="event-date" name="event-date" />
+    </div>
+    {{!-- make option select for locations array --}}
+    <div>
+      <label for="event-location">Event Location</label>
+      <input id="event-location" name="event-location" />
+    </div>
+
+    <button type="submit" class="btn">Create</button>
+  </form>
+</section>
+
+{{!-- {{#if posts.length}}
+<section>
+  <h2>Your Posts</h2>
+  <ol>
+    {{#each posts as |post|}}
+    <li>
+      {{> post-info post}}
+      <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit post</a>
+    </li>
+    {{/each}}
+  </ol>
+</section>
+{{/if}} --}}
+
+<script src="/javascript/add-event.js"></script>
