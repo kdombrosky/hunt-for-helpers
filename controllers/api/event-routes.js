@@ -58,13 +58,16 @@ router.get('/:id', (req,res) => {
     });
 });
 
+
 // Create an event 
 router.post('/', (req,res) => {
+    console.log(req.session)
     Event.create({
         title: req.body.title,
         location: req.body.location,
         date: req.body.date,
-        description: req.body.description
+        description: req.body.description,
+        user_id: req.session.user_id
     })
     .then(dbEventData => res.json(dbEventData))
     .catch(err => {
