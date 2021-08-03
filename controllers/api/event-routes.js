@@ -65,64 +65,6 @@ router.get('/state/:id', (req,res) => {
     });
 });
 
-// Get all events created by a specific user /api/events/user/:id
-router.get('/user/:id', (req,res) => {
-    Event.findOne({
-        where: {
-            user_id: req.params.id
-        },
-        attributes: ['id', 'title', 'location', 'date', 'description'],
-        include: [
-            {
-                model: User,
-                attributes: ['username']
-            }
-        ]
-    })
-    .then(dbEventData => {
-        if (!dbEventData) {
-            res.status(404).json({ message: 'No events found with this user id' });
-            return;
-        }
-        res.json(dbEventData);
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-    });
-});
-
-// Get all events attended by a specific user /api/events/user/rsvp/:id
-router.get('/user/rsvp/:id', (req,res) => {
-    UserEvent.findAll({
-        where: {
-            user_id: req.params.id
-        },
-        attributes: ['id', 'event_id','user_id'],
-        include: [
-            {
-                model: User,
-                attributes: ['username']
-            },
-            {
-                model: Event,
-                attributes: ['id', 'title', 'location', 'date', 'description']
-            }
-        ]
-    })
-    .then(dbEventData => {
-        if (!dbEventData) {
-            res.status(404).json({ message: 'No events found with this user id' });
-            return;
-        }
-        res.json(dbEventData);
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-    });
-});
-
 
 // Create an event 
 router.post('/', (req,res) => {

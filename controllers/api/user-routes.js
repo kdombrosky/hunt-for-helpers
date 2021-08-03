@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Event, userEvent } = require('../../models');
 
 // GET all users /api/users
 router.get('/', (req, res) => {
@@ -46,6 +46,7 @@ router.get('/:id', (req, res) => {
         res.status(500).json(err);
     });
 });
+
 
 // CREATE new user /api/users
 router.post('/', (req, res) => {
