@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Event, userEvent } = require('../../models');
 
 // GET all users /api/users
 router.get('/', (req, res) => {
@@ -20,25 +20,18 @@ router.get('/:id', (req, res) => {
         where: {
             id: req.params.id
         },
+        // include events user has created and events user has attended
         include: [
-            // {
-            //     model: Post,
-            //     attributes: ['id', 'title', 'post_url', 'created_at']
-            // },
-            // {
-            //     model: Comment,
-            //     attributes: ['id', 'comment_text', 'created_at'],
-            //     include: {
-            //         model: Post,
-            //         attributes: ['title']
-            //     }
-            // },
-            // {
-            //     model: Post,
-            //     attributes: ['title'],
-            //     through: Vote,
-            //     as: 'voted_posts'
-            // }
+            {
+                model: Event,
+                attributes: ['id', 'title', 'date', 'location']
+            },
+            {
+                model: Event,
+                attributes: ['title'],
+                through: userEvent,
+                as: 'attended_events'
+            }
         ]
     })
     .then(dbUserData => {
@@ -53,6 +46,7 @@ router.get('/:id', (req, res) => {
         res.status(500).json(err);
     });
 });
+
 
 // CREATE new user /api/users
 router.post('/', (req, res) => {
