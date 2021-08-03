@@ -11,10 +11,6 @@ router.get('/', (req,res) => {
             {
                 model: User,
                 attributes: ['name']
-            },
-            {
-                model: UserEvent,
-                attributes: ['user_id']
             }
         ]
     })
@@ -25,27 +21,23 @@ router.get('/', (req,res) => {
     });
 });
 
-// Read a single event 
-router.get('/:id', (req,res) => {
+// Get all events by state /api/events/state/FL
+router.get('/state/:id', (req,res) => {
     Event.findOne({
         where: {
-            id: req.params.id
+            location: req.params.id
         },
         attributes: ['id', 'title', 'location', 'date', 'description'],
         include: [
             {
                 model: User,
                 attributes: ['name']
-            },
-            {
-                model: UserEvent,
-                attributes: ['user_id']
             }
         ]
     })
     .then(dbEventData => {
         if (!dbEventData) {
-            res.status(404).json({ message: 'No event found with this id' });
+            res.status(404).json({ message: 'No events found in this state.' });
             return;
         }
         res.json(dbEventData);
@@ -55,6 +47,65 @@ router.get('/:id', (req,res) => {
         res.status(500).json(err);
     });
 });
+
+// Get all events created by a specific user /api/events/user/:id
+router.get('/user/:id', (req,res) => {
+    Event.findOne({
+        where: {
+            user_id: req.params.id
+        },
+        attributes: ['id', 'title', 'location', 'date', 'description'],
+        include: [
+            {
+                model: User,
+                attributes: ['name']
+            }
+        ]
+    })
+    .then(dbEventData => {
+        if (!dbEventData) {
+            res.status(404).json({ message: 'No events found with this user id' });
+            return;
+        }
+        res.json(dbEventData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+});
+
+// Get all events attended by a specific user /api/events/user/rsvp/:id
+router.get('/user/rsvp/:id', (req,res) => {
+    UserEvent.findAll({
+        where: {
+            user_id: req.params.id
+        },
+        attributes: ['id', 'event_id','user_id'],
+        include: [
+            {
+                model: User,
+                attributes: ['name']
+            },
+            {
+                model: Event,
+                attributes: ['id', 'title', 'location', 'date', 'description']
+            }
+        ]
+    })
+    .then(dbEventData => {
+        if (!dbEventData) {
+            res.status(404).json({ message: 'No events found with this user id' });
+            return;
+        }
+        res.json(dbEventData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+});
+
 
 // Create an event 
 router.post('/', (req,res) => {
@@ -98,8 +149,8 @@ router.put('/rsvp', (req, res) => {
         })
         .then(dbEventData => res.json(dbEventData))
         .catch(err => {
-        console.log(err);
-        res.status(400).json(err);
+            console.log(err);
+            res.status(400).json(err);
         });
     });
 });
@@ -141,8 +192,8 @@ router.delete('/:id', (req, res) => {
     })
     .then(dbEventData => {
         if (!dbEventData) {
-        res.status(404).json({ message: 'No event found with this id' });
-        return;
+            res.status(404).json({ message: 'No event found with this id' });
+            return;
         }
         res.json(dbEventData);
     })
