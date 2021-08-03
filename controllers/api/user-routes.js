@@ -20,25 +20,18 @@ router.get('/:id', (req, res) => {
         where: {
             id: req.params.id
         },
+        // include events user has created and events user has attended
         include: [
-            // {
-            //     model: Post,
-            //     attributes: ['id', 'title', 'post_url', 'created_at']
-            // },
-            // {
-            //     model: Comment,
-            //     attributes: ['id', 'comment_text', 'created_at'],
-            //     include: {
-            //         model: Post,
-            //         attributes: ['title']
-            //     }
-            // },
-            // {
-            //     model: Post,
-            //     attributes: ['title'],
-            //     through: Vote,
-            //     as: 'voted_posts'
-            // }
+            {
+                model: Event,
+                attributes: ['id', 'title', 'date', 'location']
+            },
+            {
+                model: Event,
+                attributes: ['title'],
+                through: userEvent,
+                as: 'attended_events'
+            }
         ]
     })
     .then(dbUserData => {
@@ -109,6 +102,18 @@ router.post('/login', (req, res) => {
         });
     });  
 });
+
+router.post('/logout', (req, res) => {
+    if (req.session.loggedIn) {
+      req.session.destroy(() => {
+        res.status(204).end();
+      });
+    }
+    else {
+      res.status(404).end();
+    }
+  });
+  
 
 router.put('/:id', (req, res) => {
     // pass in req.body instead to only update what's passed through

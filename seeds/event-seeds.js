@@ -13,13 +13,14 @@ const eventData = [
         description: 'help dory remember where nemo went.',
         location: 'California',
         date: '10/28/2021',
-        user_id: 1
+        user_id: 3    
     },
     {
         title: 'Help bruce with fish food anonymous',
         description: 'Help bruce and friends not eat fish for food because they are friends.',
         location: 'Washington',
         date: '11/05/2021',
+        user_id: 2
     },
 ]
 

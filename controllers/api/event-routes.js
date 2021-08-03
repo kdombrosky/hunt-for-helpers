@@ -1,16 +1,25 @@
 const router = require('express').Router();
 const { Event, User, UserEvent } = require('../../models');
+const sequelize = require('../../config/connection');
+
 
 // Read all events
 router.get('/', (req,res) => {
     Event.findAll({
-        attributes: ['id', 'title', 'location', 'date', 'description'],
-        // sort newest to oldest
+        attributes: [
+            'id', 
+            'title', 
+            'location', 
+            'date', 
+            'description',
+            // include total rsvp count for post
+            [sequelize.literal('(SELECT COUNT(*) FROM userEvent WHERE event.id = userEvent.event_id)'), 'rsvp_count']
+        ],
         order: [['created_at', 'DESC']],
         include: [
             {
                 model: User,
-                attributes: ['name']
+                attributes: ['username']
             }
         ]
     })
@@ -27,11 +36,19 @@ router.get('/state/:id', (req,res) => {
         where: {
             location: req.params.id
         },
-        attributes: ['id', 'title', 'location', 'date', 'description'],
+        attributes: [
+            'id', 
+            'title', 
+            'location', 
+            'date', 
+            'description',
+            // include total rsvp count for post
+            [sequelize.literal('(SELECT COUNT(*) FROM userEvent WHERE event.id = userEvent.event_id)'), 'rsvp_count']
+        ],
         include: [
             {
                 model: User,
-                attributes: ['name']
+                attributes: ['username']
             }
         ]
     })
@@ -58,7 +75,7 @@ router.get('/user/:id', (req,res) => {
         include: [
             {
                 model: User,
-                attributes: ['name']
+                attributes: ['username']
             }
         ]
     })
@@ -85,7 +102,7 @@ router.get('/user/rsvp/:id', (req,res) => {
         include: [
             {
                 model: User,
-                attributes: ['name']
+                attributes: ['username']
             },
             {
                 model: Event,
