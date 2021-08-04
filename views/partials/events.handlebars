@@ -1,0 +1,12 @@
+<div class="events">
+  {{#each this}}
+  <section class="event">
+    <div class="meta">
+      {{username}} on {{format_date date}}
+    </div>
+    <div class="text">
+      {{description}}
+    </div>
+  </section>
+  {{/each}}
+</div>
