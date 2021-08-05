@@ -1,16 +1,22 @@
-<div class="events">
- <section class="event">
-    
-  <div class="meta">
-    <td style="border: 1px solid black;">{{title}}</td>
-    <td style="border: 1px solid black;">{{format_date date}}</td>
-    <td style="border: 1px solid black;">{{location}}</td>
-    <td style="border: 1px solid black;">{{user.username}}</td>
-    <td style="border: 1px solid black;">{{description}}</td>
-    <td style="border: 1px solid black;">
-      <button type="button" class="rsvp-btn">RSVP</button>
-    </td>
+<div class="col-sm-12 col-md-6 mb-4">
+  <div class="card">
+    <div class="card-header align-items-center">
+      <div class="col">
+      <h5 class="card-title">{{title}}</h5>
+      </div>
+      <div class="col">
+      <h6 class="card-title">by {{user.username}}</h6>
+      </div>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title ">{{format_date date}}<span class="left-span">{{location}}</span></h5>
+      <p class="card-text ">{{description}}</p>
+      <div class="d-flex justify-content-end align-items-center">
+        <!-- Add event.userEvent here -->
+        <span class="card-text">{{rsvp_count}} Attending</span>
+        <button class="btn btn-primary left-span rsvp-btn" type="button">RSVP</button>
+        <!-- IF user.id = req.session.id, THEN add a button to update/edit event -->
+      </div>
+    </div>
   </div>
-
-
-<script src="/javascript/rsvp.js"></script>
+</div>

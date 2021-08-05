@@ -3,7 +3,7 @@ const sequelize = require('../config/connection');
 const { Event, User } = require('../models');
 const withAuth = require('../utils/auth');
 
-// get all events for homepage
+// Get all events for homepage
 router.get('/', withAuth, (req, res) => {
   console.log('======================');
   Event.findAll({
@@ -14,7 +14,7 @@ router.get('/', withAuth, (req, res) => {
         'location',
         'date',
         'created_at',
-        // [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+        //[sequelize.literal('(SELECT COUNT(*) FROM userEvent WHERE event.id = userEvent.event_id)'), 'rsvp_count']
     ],
     include: [
       {
@@ -37,6 +37,7 @@ router.get('/', withAuth, (req, res) => {
     });
 });
 
+
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {
     res.redirect('/');
@@ -46,5 +47,42 @@ router.get('/login', (req, res) => {
 });
 
 
+router.get('/Event/:id', (req, res) => {
+  Event.findOne({
+      where: {
+          id: req.params.id
+      },
+      attributes: [
+          'id',
+          'title',
+          'created_at'
+      ],
+      include: [
+          {
+          model: User,
+          attributes: ['username']
+          }
+      ]
+      })
+      .then(dbEventData => {
+          if (!dbEventData) {
+          res.status(404).json({ message: 'No event found with this id' });
+          return;
+          }
+  
+          // Serialize the data
+          const event = dbEventData.get({ plain: true });
+  
+          // Pass data to template
+          res.render('single-event', {
+              event,
+              loggedIn: req.session.loggedIn
+          });
+      })
+      .catch(err => {
+          console.log(err);
+          res.status(500).json(err);
+      });
+});
 
 module.exports = router;

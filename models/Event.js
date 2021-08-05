@@ -4,24 +4,23 @@ const sequelize = require('../config/connection');
 class Event extends Model {
   static rsvp(body, models) {
     return models.UserEvent.create({
-      user_id: body.user_id,
-      event_id: body.event_id
+        user_id: body.user_id,
+        post_id: body.post_id
     }).then(() => {
-      return Event.findOne({
+    return Event.findOne({
         where: {
-          id: body.event_id
+            id: body.event_id
         },
         attributes: [
           'id',
-          'description',
-          'location',
-          'date',
           'title',
-          'created_at'
-          // [
-          //   // sequelize.literal('(SELECT COUNT(*) FROM userevent WHERE post.id = vote.post_id)'),
-          //   'vote_count'
-          // ]
+          'date',
+          'location',
+          // use raw MySQL aggregate function query to get a count of how many userEvents the event has and return it under the name `userEvent_count`
+          [
+              sequelize.literal('(SELECT COUNT(*) FROM userEvent WHERE event.id = userEvent.event_id)'),
+              'rsvp_count'
+          ]
         ]
       });
     });
@@ -37,12 +36,18 @@ Event.init(
       },
       title: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          len: [1, 25]
+        }
 
       },
       description: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          len: [1, 300]
+        }
 
       },
       location: {
