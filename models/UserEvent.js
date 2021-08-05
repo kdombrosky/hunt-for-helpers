@@ -32,7 +32,7 @@ UserEvent.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'user_event'
+    modelName: 'userEvent'
   }
 );
 

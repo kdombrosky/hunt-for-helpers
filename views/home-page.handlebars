@@ -28,15 +28,12 @@
   </form>
 </section>
 
-
-
-
 <!-- Populate Events -->
 {{#if events.length}}
 <section class="container">
-  <h2 class="text-center mb-4">Your Events</h2>
+  <h2 class="text-center mb-4">Events</h2>
   <hr />
-  <!-- Display Events -->
+  <!-- Display events individually -->
   <div class="row">
     {{#each events as |event|}}
       {{> events event}}

@@ -1,29 +1,48 @@
-<form class="login-form">
-  <div>
-    <label for="username-login">Username:</label>
-    <input type="text" id="username-login" />
-  </div>
-  <div>
-    <label for="password-login">password:</label>
-    <input type="password" id="password-login" />
-  </div>
-  <div>
-    <button type="submit">login</button>
-  </div>
-</form>
+<!-- Sign Up Form -->
+<section class="container">
+  <form class="text-center border border-light p-4 signup-form">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-6">
+        <p class="h3 mb-2">New user? Sign up here</p>
+        <hr />
 
-<form class="signup-form">
-  <div>
-    <label for="username-signup">username:</label>
-    <input type="text" id="username-signup" />
-  </div>
-  <div>
-    <label for="password-signup">password:</label>
-    <input type="password" id="password-signup" />
-  </div>
-  <div>
-    <button type="submit">signup</button>
-  </div>
-</form>
+        <!-- Username -->
+        <input type="text" id="username-signup" name="username-signup" class="form-control mb-2" placeholder="Username">
+        <!-- Password -->
+        <input type="password" id="password-signup" name="password-signup" class="form-control mb-2" placeholder="Password">
+
+        <!-- Login Btn -->
+        <button class="btn btn-primary my-4 btn-block" type="submit">Sign Up</button>
+      </div>
+      <div class="col"></div>
+    </div>
+  </form>
+</section>
+
+
+
+<!-- Login Form -->
+<section class="container">
+  <form class="text-center border border-light p-4 mb-4 login-form">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-6">
+        <p class="h3 mb-2">Returning? Log in below!</p>
+        <hr />
+        <!-- Username -->
+        <input type="text" id="username-login" name="username-login" class="form-control mb-2" placeholder="Username">
+        <!-- Password -->
+        <input type="password" id="password-login" name="password-login" class="form-control mb-2" placeholder="Password">
+
+        <!-- Login Btn -->
+        <button class="btn btn-primary my-4 btn-block" type="submit">Login</button>
+      </div>
+      <div class="col"></div>
+    </div>
+  </form>
+</section>
+
+
 
 <script src="/javascript/login.js"></script>
