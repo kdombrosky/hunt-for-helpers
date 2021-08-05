@@ -18,8 +18,8 @@ Hunt for Helpers is a website that is designed to make the world a better place.
 - Bootstrap
 - Axios
 
-##Link
-https://hunt-for-helpers.herokuapp.com/
+## Link
+- https://hunt-for-helpers.herokuapp.com/
 
 >## Github Usernames
 - BradKeller2117 "Brad Keller"
