@@ -1,7 +1,7 @@
 # Hunting for Helpers
 
 >## Contributors
-* Kayla Dombrowsky
+* Kayla Dombrosky
 
 * Jesse Hinojosa
 
@@ -26,7 +26,7 @@ The licenses used in the development of the website include but are not limited 
 >## Github Usernames
 - BradKeller2117 "Brad Keller"
 - jayMaverick "Jesse Hinojosa"
-- Kdombrosky "Kayla Dombrowsky"
+- Kdombrosky "Kayla Dombrosky"
 - Eric-JG "Eric Enriquez"
 
 
