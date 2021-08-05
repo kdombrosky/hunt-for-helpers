@@ -9,8 +9,8 @@
       <p class="card-text ">{{description}}</p>
       <div class="d-flex justify-content-end align-items-center">
         <!-- Add event.userEvent here -->
-        <span class="card-text"> 5 Attending</span>
-        <a href="#" class="btn btn-primary left-span">RSVP</a>
+        <span class="card-text">{{rsvp_count}} Attending</span>
+        <button class="btn btn-primary left-span rsvp-btn" type="button">RSVP</button>
         <!-- IF user.id = req.session.id, THEN add a button to update/edit event -->
       </div>
     </div>
