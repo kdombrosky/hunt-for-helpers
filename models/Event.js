@@ -26,6 +26,10 @@ class Event extends Model {
     });
   }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 19d18c6699636077602667e53e03ad418cadd7ed
 // add title and description
 Event.init(
     {
