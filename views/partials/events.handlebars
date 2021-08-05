@@ -1,27 +1,18 @@
-<div class="events">
-<<<<<<< HEAD
-  {{#each this}}
-  <section class="event">
-    <div class="meta">
-      {{username}} on {{format_date date}}
+<div class="col-sm-6 mb-4">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="card-title">{{title}}</h5>
+      <h6 class="card-title">by {{user.username}}</h6>
     </div>
-    <div class="text">
-      {{description}}
+    <div class="card-body">
+      <h5 class="card-title ">{{format_date date}}<span class="left-span">{{location}}</span></h5>
+      <p class="card-text ">{{description}}</p>
+      <div class="d-flex justify-content-end align-items-center">
+        <!-- Add event.userEvent here -->
+        <span class="card-text"> 5 Attending</span>
+        <a href="#" class="btn btn-primary left-span">RSVP</a>
+        <!-- IF user.id = req.session.id, THEN add a button to update/edit event -->
+      </div>
     </div>
-  </section>
-  {{/each}}
-</div>
-=======
- <section class="event">
-    
-  <div class="meta">
-    <td style="border: 1px solid black;">{{title}}</td>
-    <td style="border: 1px solid black;">{{format_date date}}</td>
-    <td style="border: 1px solid black;">{{location}}</td>
-    <td style="border: 1px solid black;">{{user.username}}</td>
-    <td style="border: 1px solid black;">{{description}}</td>
-    <td style="border: 1px solid black;">true</td>
   </div>
-
-
->>>>>>> 8133041c3e28123c6c5d87c3e9156135a6989d60
+</div>

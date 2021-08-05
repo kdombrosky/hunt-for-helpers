@@ -1,47 +1,45 @@
-<section>
-  <form class="create-new-event">
-    <div>
-      <label for="event-title">Title</label>
-      <input type="text" id="event-title" name="event-title" />
-    </div>
-    <div>
-      <label for="event-description">Description</label>
-      <input id="event-description" name="event-description" />
-    </div>
-    <div>
-      <label for="event-date">Event Date</label>
-      <input id="event-date" name="event-date" />
-    </div>
-    {{!-- make option select for locations array --}}
-    <div>
-      <label for="event-location">Event Location</label>
-      <input id="event-location" name="event-location" />
+<!-- Create Event Form -->
+<section class="container">
+  <form class="text-center border border-light p-4 create-new-event">
+    <p class="h3 mb-2">Start a new contribution</p>
+    <p class="lead">
+      Lead the way to making a difference.
+    </p>
+    <!-- Event Title -->
+    <input type="text" id="event-title" name="event-title" class="form-control mb-2" placeholder="Event Title">
+
+    <!-- Event Description -->
+    <textarea id="event-description" name="event-description" class="form-control mb-2" rows="2" placeholder="Event Description"></textarea>
+
+    <!-- Event Date / Location -->
+    <div class="form-row mb-2">
+          <!-- Event Location -->
+        <div class="col">
+          <input type="text" id="event-location" name="event-location" class="form-control" placeholder="Event Location (FL)">
+        </div>
+          <!-- Event Date -->
+        <div class="col">
+          <input type="text" id="event-date" name="event-date" class="form-control" placeholder="Event Date (08/01/2021)">
+        </div>
     </div>
 
-    <button type="submit" class="btn">Create</button>
+    <!-- Create-Event Btn -->
+    <button class="btn btn-primary my-4 btn-block create-new-event" type="submit">Create Event</button>
   </form>
 </section>
 
+<!-- Populate Events -->
 {{#if events.length}}
-<section>
-  <h2>Events</h2>
-   <table>
-  <tr>
-   <th style="border: 1px solid black;">Title</th>
-   <th style="border: 1px solid black;">Date</th>
-   <th style="border: 1px solid black;">Location</th>
-   <th style="border: 1px solid black;">Username</th>
-   <th style="border: 1px solid black;">Description</th>
-   <th style="border: 1px solid black;">RSVP</th>
-  </tr>
-
+<section class="container">
+  <h2 class="text-center mb-4">Events</h2>
+  <hr />
+  <!-- Display events individually -->
+  <div class="row">
     {{#each events as |event|}}
-    <tr>
       {{> events event}}
-    </tr>
     {{/each}}
-
-  </table>
+  </div>
 </section>
 {{/if}}
+
 <script src="/javascript/add-event.js"></script>

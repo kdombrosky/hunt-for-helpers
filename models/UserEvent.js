@@ -36,8 +36,4 @@ UserEvent.init(
   }
 );
 
-<<<<<<< HEAD
 module.exports = UserEvent;
-=======
-module.exports = UserEvent;
->>>>>>> 8133041c3e28123c6c5d87c3e9156135a6989d60
