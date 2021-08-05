@@ -12,7 +12,7 @@
 >## Description
 Hunt for Helpers is a website that is designed to make the world a better place. By making community service events more readily known, we hope that it encourages people to get more involved in their respective communites. Users will be able to create, edit, or cancel any events that they have organized, as well as join events that have already been created.
 
->## Services Used
+>## Technologies Used
 - Heroku
 - Sequelize
 - Bootstrap
