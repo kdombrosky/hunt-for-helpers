@@ -37,12 +37,18 @@ Event.init(
       },
       title: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          len: [1, 25]
+        }
 
       },
       description: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          len: [1, 300]
+        }
 
       },
       location: {

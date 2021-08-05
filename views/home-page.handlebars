@@ -5,26 +5,32 @@
     <p class="lead">
       Lead the way to making a difference.
     </p>
-    <!-- Event Title -->
-    <input type="text" id="event-title" name="event-title" class="form-control mb-2" placeholder="Event Title">
+    <div class="row">
+    <div class="col"></div>
+    <div class="col-md-7">
+      <!-- Event Title -->
+      <input type="text" id="event-title" name="event-title" class="form-control mb-2" placeholder="Event Title">
 
-    <!-- Event Description -->
-    <textarea id="event-description" name="event-description" class="form-control mb-2" rows="2" placeholder="Event Description"></textarea>
+      <!-- Event Description -->
+      <textarea id="event-description" name="event-description" class="form-control mb-2" rows="3" placeholder="Event Description"></textarea>
 
-    <!-- Event Date / Location -->
-    <div class="form-row mb-2">
-          <!-- Event Location -->
-        <div class="col">
-          <input type="text" id="event-location" name="event-location" class="form-control" placeholder="Event Location (FL)">
-        </div>
-          <!-- Event Date -->
-        <div class="col">
-          <input type="text" id="event-date" name="event-date" class="form-control" placeholder="Event Date (08/01/2021)">
-        </div>
+      <!-- Event Date / Location -->
+      <div class="form-row">
+            <!-- Event Location -->
+          <div class="col mb-2">
+            <input type="text" id="event-location" name="event-location" class="form-control" placeholder="Event Location (FL)">
+          </div>
+            <!-- Event Date -->
+          <div class="col">
+            <input type="text" id="event-date" name="event-date" class="form-control" placeholder="Event Date (08/01/2021)">
+          </div>
+      </div>
+
+      <!-- Create-Event Btn -->
+      <button class="btn btn-primary my-3 btn-block create-new-event px-5" type="submit">Create Event</button>
     </div>
-
-    <!-- Create-Event Btn -->
-    <button class="btn btn-primary my-4 btn-block create-new-event" type="submit">Create Event</button>
+    <div class="col"></div>
+    </div>
   </form>
 </section>
 

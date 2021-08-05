@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Event, userEvent } = require('../../models');
+const { User, Event, UserEvent } = require('../../models');
 
 // GET all users /api/users
 router.get('/', (req, res) => {
@@ -24,12 +24,12 @@ router.get('/:id', (req, res) => {
         include: [
             {
                 model: Event,
-                attributes: ['id', 'title', 'date', 'location']
+                attributes: ['id', 'title', 'date', 'location', 'description']
             },
             {
                 model: Event,
-                attributes: ['title'],
-                through: userEvent,
+                attributes: ['id', 'title', 'date', 'location', 'description'],
+                through: UserEvent,
                 as: 'attended_events'
             }
         ]
@@ -71,9 +71,9 @@ router.post('/', (req, res) => {
 });
 
 
-// Login route
+// Login route /api/users/login
 router.post('/login', (req, res) => {
-    // expects {username: 'JohnSmith', password: 'password1234'}
+    // Expects {username: 'JohnSmith', password: 'password1234'}
     User.findOne({
         where: {
             username: req.body.username
@@ -104,20 +104,21 @@ router.post('/login', (req, res) => {
     });  
 });
 
+// Logout at /api/users/logout
 router.post('/logout', (req, res) => {
     if (req.session.loggedIn) {
-      req.session.destroy(() => {
-        res.status(204).end();
-      });
+        req.session.destroy(() => {
+            res.status(204).end();
+        });
     }
     else {
-      res.status(404).end();
+        res.status(404).end();
     }
-  });
-  
+});
 
+// Update users at /api/users/1
 router.put('/:id', (req, res) => {
-    // pass in req.body instead to only update what's passed through
+    // Expects {username: 'JohnSmith', password: 'password1234'}
     User.update(req.body, {
         individualHooks: true,
         where: {
