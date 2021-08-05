@@ -12,7 +12,6 @@ router.get('/', (req,res) => {
             'location', 
             'date', 
             'description',
-            
             // include total rsvp count for post
             [sequelize.literal('(SELECT COUNT(*) FROM userEvent WHERE event.id = userEvent.event_id)'), 'rsvp_count']
         ],

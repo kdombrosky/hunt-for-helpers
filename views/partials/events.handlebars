@@ -1,12 +1,13 @@
 <div class="events">
-  {{#each this}}
-  <section class="event">
-    <div class="meta">
-      {{username}} on {{format_date date}}
-    </div>
-    <div class="text">
-      {{description}}
-    </div>
-  </section>
-  {{/each}}
-</div>
+ <section class="event">
+    
+  <div class="meta">
+    <td style="border: 1px solid black;">{{title}}</td>
+    <td style="border: 1px solid black;">{{format_date date}}</td>
+    <td style="border: 1px solid black;">{{location}}</td>
+    <td style="border: 1px solid black;">{{user.username}}</td>
+    <td style="border: 1px solid black;">{{description}}</td>
+    <td style="border: 1px solid black;">true</td>
+  </div>
+
+
