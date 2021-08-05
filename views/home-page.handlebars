@@ -1,6 +1,4 @@
 <section>
-  <h2> Dashboard</h2>
-
   <form class="create-new-event">
     <div>
       <label for="event-title">Title</label>
@@ -24,23 +22,9 @@
   </form>
 </section>
 
-<<<<<<< HEAD
 {{#if events.length}}
 <section>
-  <h2>Your Events</h2>
-  <ol>
-    <li>
-      {{> events events}}
-      {{!-- <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit post</a> --}}
-    </li>
-  </ol>
-=======
-
-
-
-{{#if events.length}}
-<section>
-  <h2>My Events</h2>
+  <h2>Events</h2>
    <table>
   <tr>
    <th style="border: 1px solid black;">Title</th>
@@ -58,7 +42,6 @@
     {{/each}}
 
   </table>
->>>>>>> 8133041c3e28123c6c5d87c3e9156135a6989d60
 </section>
 {{/if}}
 <script src="/javascript/add-event.js"></script>

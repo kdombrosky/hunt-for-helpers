@@ -38,41 +38,5 @@ router.get('/', withAuth, (req, res) => {
     });
 });
 
-// still need to implement
-
-// router.get('/edit/:id', withAuth, (req, res) => {
-//   Event.findByPk(req.params.id, {
-//     attributes: [
-//         'id',
-//         'title',
-//         'description',
-//         'location',
-//         'date',
-//         'created_at',
-//         // [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
-//     ],
-//     include: [
-//       {
-//         model: User,
-//         attributes: ['username']
-//       }
-//     ]
-//   })
-//     .then(dbEventData => {
-//       if (dbEventData) {
-//         const events = dbEventData.get({ plain: true });
-        
-//         res.render('edit-event', {
-//           events,
-//           loggedIn: true
-//         });
-//       } else {
-//         res.status(404).end();
-//       }
-//     })
-//     .catch(err => {
-//       res.status(500).json(err);
-//     });
-// });
 
 module.exports = router;

@@ -1,0 +1,13 @@
+<section>
+  <h2>Events</h2>
+
+  <ol>
+    {{#each events as |event|}}
+    <li>
+      {{> events event}}
+
+      {{!-- <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit post</a> --}}
+    </li>
+        {{/each}}
+  </ol>
+</section>
