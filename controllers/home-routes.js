@@ -4,7 +4,7 @@ const { Event, User } = require('../models');
 const withAuth = require('../utils/auth');
 
 // Get all events for homepage
-router.get('/', withAuth, (req, res) => {
+router.get('https://sheltered-savannah-38970.herokuapp.com/', withAuth, (req, res) => {
   console.log('======================');
   Event.findAll({
     attributes: [
