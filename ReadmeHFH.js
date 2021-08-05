@@ -29,7 +29,7 @@ function promptUser() {
                 type:'checkbox',
                 name:'contributors',
                 message:'Who contributed to this project (required)',
-                choices: ['Brad Keller', 'Kayla Dombrowsky', 'Jessie Hinojosa', 'Eric Enriquez']
+                choices: ['Brad Keller', 'Kayla Dombrosky', 'Jessie Hinojosa', 'Eric Enriquez']
             },
             {
                 type:'input',
