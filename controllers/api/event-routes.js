@@ -29,13 +29,9 @@ router.get('/', (req,res) => {
         res.status(500).json(err);
     });
 });
-
-// Get all events by state /api/events/state/FL
-router.get('/state/:id', (req,res) => {
+// GET a specific event
+router.get('/:id', (req, res) => {
     Event.findOne({
-        where: {
-            location: req.params.id
-        },
         attributes: [
             'id', 
             'title', 
@@ -43,8 +39,11 @@ router.get('/state/:id', (req,res) => {
             'date', 
             'description',
             // include total rsvp count for post
-            [sequelize.literal('(SELECT COUNT(*) FROM userEvent WHERE event.id = userEvent.event_id)'), 'rsvp_count']
+            // [sequelize.literal('(SELECT COUNT(*) FROM userEvent WHERE event.id = userEvent.event_id)'), 'rsvp_count']
         ],
+        where: {
+            id: req.params.id
+        },
         include: [
             {
                 model: User,
@@ -53,8 +52,8 @@ router.get('/state/:id', (req,res) => {
         ]
     })
     .then(dbEventData => {
-        if (!dbEventData) {
-            res.status(404).json({ message: 'No events found in this state.' });
+        if(!dbEventData) {
+            res.status(404).json({ message: 'No event found with this id' });
             return;
         }
         res.json(dbEventData);
@@ -65,6 +64,19 @@ router.get('/state/:id', (req,res) => {
     });
 });
 
+
+router.put('/rsvp', (req, res) => {
+    // ensures the session exists first
+    if (req.session) {
+      // pass session id along with all destructured properties on req.body
+      Event.rsvp({ ...req.body, user_id: req.session.user_id }, { UserEvent, Event, User })
+        .then(updatedUserEventData => res.json(updatedUserEventData))
+        .catch(err => {
+          console.log(err);
+          res.status(500).json(err);
+        });
+    }});
+  
 
 // Create an event 
 router.post('/', (req,res) => {
@@ -84,37 +96,37 @@ router.post('/', (req,res) => {
 });
 
 // Update event attendance /api/rsvp/?
-router.put('/rsvp', (req, res) => {
-    // Create the attendance update 
-    UserEvent.create({
-        user_id: req.body.user_id,
-        event_id: req.body.event_id
-    })
-    .then(() => {
-        // find the event the user is attending
-        return Event.findOne({
-            where: {
-                id: req.body.event_id
-            },
-            attributes: [
-                'id',
-                'title',
-                'date',
-                'location',
-                // use raw MySQL aggregate function query to get a count of how many userEvents the event has and return it under the name `userEvent_count`
-                [
-                    sequelize.literal('(SELECT COUNT(*) FROM vote WHERE event.id = userEvent.event_id)'),
-                    'userEvent_count'
-                ]
-            ]
-        })
-        .then(dbEventData => res.json(dbEventData))
-        .catch(err => {
-            console.log(err);
-            res.status(400).json(err);
-        });
-    });
-});
+// router.put('/rsvp', (req, res) => {
+//     // Create the attendance update 
+//     UserEvent.create({
+//         user_id: req.body.user_id,
+//         event_id: req.body.event_id
+//     })
+//     .then(() => {
+//         // find the event the user is attending
+//         return Event.findOne({
+//             where: {
+//                 id: req.body.event_id
+//             },
+//             attributes: [
+//                 'id',
+//                 'title',
+//                 'date',
+//                 'location',
+//                 // use raw MySQL aggregate function query to get a count of how many userEvents the event has and return it under the name `userEvent_count`
+//                 [
+//                     sequelize.literal('(SELECT COUNT(*) FROM vote WHERE event.id = userEvent.event_id)'),
+//                     'userEvent_count'
+//                 ]
+//             ]
+//         })
+//         .then(dbEventData => res.json(dbEventData))
+//         .catch(err => {
+//             console.log(err);
+//             res.status(400).json(err);
+//         });
+//     });
+// });
 
 // Update an event 
 router.put('/:id', (req, res) => {

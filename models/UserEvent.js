@@ -12,7 +12,7 @@ UserEvent.init(
     },
     user_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      // allowNull: false,
       references: {
         model: 'user',
         key: 'id'
@@ -20,7 +20,7 @@ UserEvent.init(
     },
     event_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      // allowNull: false,
       references: {
         model: 'event',
         key: 'id'

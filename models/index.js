@@ -22,6 +22,21 @@ Event.belongsToMany(User, {
   foreignKey: 'event_id'
 });
 
+UserEvent.belongsTo(User, {
+  foreignKey: 'user_id'
+});
+
+UserEvent.belongsTo(Event, {
+  foreignKey: 'event_id'
+});
+
+User.hasMany(UserEvent, {
+  foreignKey: 'user_id'
+});
+
+Event.hasMany(UserEvent, {
+  foreignKey: 'event_id'
+});
 
 
 // UserEvent.hasMany(Event, {

@@ -1,7 +1,32 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Event extends Model {}
+class Event extends Model {
+  static rsvp(body, models) {
+    return models.UserEvent.create({
+      user_id: body.user_id,
+      event_id: body.event_id
+    }).then(() => {
+      return Event.findOne({
+        where: {
+          id: body.event_id
+        },
+        attributes: [
+          'id',
+          'description',
+          'location',
+          'date',
+          'title',
+          'created_at'
+          // [
+          //   // sequelize.literal('(SELECT COUNT(*) FROM userevent WHERE post.id = vote.post_id)'),
+          //   'vote_count'
+          // ]
+        ]
+      });
+    });
+  }
+}
 // add title and description
 Event.init(
     {
